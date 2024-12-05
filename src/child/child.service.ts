@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateChildDto } from './dto/create-child.dto';
 import { UpdateChildDto } from './dto/update-child.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -23,10 +23,20 @@ export class ChildService {
   }
 
   async update(id: number, updateChildDto: UpdateChildDto) {
-    return await this.db.child.update({where:{id},data:updateChildDto});
+    try{
+      return await this.db.child.update({where:{id},data:updateChildDto});  
+    }catch(error){
+      throw new NotFoundException("Child not found");
+    };
   }
 
   remove(id: number) {
-    return this.db.child.delete({where:{id}});
+    try{
+      return this.db.child.delete({where:{id}});
+    }catch(error){
+      throw new NotFoundException("Child not found");
+    }
   }
+
+
 }

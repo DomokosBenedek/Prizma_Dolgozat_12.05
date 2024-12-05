@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateToyDto } from './dto/create-toy.dto';
 import { UpdateToyDto } from './dto/update-toy.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -23,10 +23,18 @@ export class ToyService {
   }
 
   async update(id: number, updateToyDto: UpdateToyDto) {
-    return await this.db.toy.update({where:{id},data:updateToyDto});
+    try{
+      return await this.db.toy.update({where:{id},data:updateToyDto});
+    }catch(error){
+      throw new NotFoundException("Toy not found");
+    }  
   }
 
   remove(id: number) {
-    return this.db.toy.delete({where:{id}});
+    try{
+      return this.db.toy.delete({where:{id}});  
+    }catch(error){
+      throw new NotFoundException("Toy not found");
+    }
   }
 }

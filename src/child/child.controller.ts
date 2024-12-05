@@ -31,4 +31,6 @@ export class ChildController {
   remove(@Param('id') id: string) {
     return this.childService.remove(+id);
   }
+
+  
 }
