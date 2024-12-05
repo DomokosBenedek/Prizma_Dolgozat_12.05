@@ -3,7 +3,7 @@ import { JatekService } from './jatek.service';
 import { CreateJatekDto } from './dto/create-jatek.dto';
 import { UpdateJatekDto } from './dto/update-jatek.dto';
 
-@Controller('jatek')
+@Controller('toys')
 export class JatekController {
   constructor(private readonly jatekService: JatekService) {}
 

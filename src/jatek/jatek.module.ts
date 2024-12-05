@@ -4,7 +4,7 @@ import { JatekController } from './jatek.controller';
 import { PrismaService } from 'src/prisma.service';
 
 @Module({
-  controllers: [JatekController, PrismaService],
+  controllers: [JatekController],
   providers: [JatekService,PrismaService],
 })
 export class JatekModule {}
