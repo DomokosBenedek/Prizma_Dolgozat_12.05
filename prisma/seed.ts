@@ -8,20 +8,20 @@ async function main() {
     
   for (let i = 0; i < 15; i++) {
     const free = Math.random() < 0.25;
-    await prisma.gyerek.create({
+    await prisma.child.create({
       data: {
-        Nev: faker.person.fullName(),
-        PontosCim: faker.location.country()+" "+faker.location.city()+" "+faker.location.street()+" "+faker.location.buildingNumber(),
-        JoVolt: faker.datatype.boolean()
+        name: faker.person.fullName(),
+        adress: faker.location.country()+" "+faker.location.city()+" "+faker.location.street()+" "+faker.location.buildingNumber(),
+        good: faker.datatype.boolean()
       }
     })
   }
   for (let i = 0; i < 50; i++) {
-    await prisma.jatek.create({
+    await prisma.toy.create({
       data: {
-        Nev: faker.commerce.productName(),
-        Anyag: help[Math.floor(Math.random() * help.length)],
-        Suly: faker.number.float({min: 0, max: 10})+ "",
+        name: faker.commerce.productName(),
+        material: help[Math.floor(Math.random() * help.length)],
+        weight: faker.number.float({min: 0, max: 10}),
       }
     })
   }

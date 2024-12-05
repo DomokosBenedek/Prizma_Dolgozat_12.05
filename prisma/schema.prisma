@@ -13,18 +13,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Jatek{
-  Id Int @id @default(autoincrement())
-  Nev String
-  Anyag String
-  Suly String
-  Gyerek Gyerek []
+model toy{
+  id Int @id @default(autoincrement())
+  name String
+  material String
+  weight Int
+  children child []
 }
 
-model Gyerek{
-  Id Int @id @default(autoincrement())
-  Nev String
-  PontosCim String
-  JoVolt Boolean
-  Jatek Jatek[]
+model child{
+  id Int @id @default(autoincrement())
+  name String
+  adress String
+  good Boolean
+  toys toy[]
 }
