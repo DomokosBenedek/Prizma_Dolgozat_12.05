@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { ToyService } from './toy.service';
 import { CreateToyDto } from './dto/create-toy.dto';
 import { UpdateToyDto } from './dto/update-toy.dto';
@@ -30,5 +30,14 @@ export class ToyController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.toyService.remove(+id);
+  }
+
+  @Put(':toyId/children/:kidId')
+  addChildToToy(@Param('toyId') toyId: string, @Param('kidId') kidId: string) {
+    return this.toyService.addChildToToy(+toyId, +kidId);
+  }
+  @Delete(':toyId/children/:kidId')
+  removeChildFromToy(@Param('toyId') toyId: string, @Param('kidId') kidId: string) {
+    return this.toyService.removeChildFromToy(+toyId, +kidId);
   }
 }

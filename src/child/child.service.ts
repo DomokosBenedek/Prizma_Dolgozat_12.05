@@ -18,8 +18,12 @@ export class ChildService {
     return this.db.child.findMany();
   }
 
-  findOne(id: number) {
-    return this.db.child.findUnique({where:{id}});
+  async findOne(id: number) {
+    try{
+      return await this.db.child.findUniqueOrThrow({where:{id}});
+    }catch(error){
+      throw new NotFoundException("Child not found");
+    }
   }
 
   async update(id: number, updateChildDto: UpdateChildDto) {
@@ -38,5 +42,30 @@ export class ChildService {
     }
   }
 
+  async addToyToChild(childid: number, toyid: number) {
+    const child = await this.db.child.findUniqueOrThrow({ where: { id: childid } });
+    const toy = await this.db.toy.findUniqueOrThrow({ where: { id: toyid } });
+    if (!child || !toy) {
+      throw new NotFoundException('Child or Toy not found');
+    }else{
+      await this.db.toy.update({
+        where: { id: toyid },
+        data: { children: { connect: { id: childid } } },
+      });
+    }
+  }
 
+  async removeToyFromChild(childid: number, toyid: number) {
+    const child = await this.db.child.findUniqueOrThrow({ where: { id: childid } });
+    const toy = await this.db.toy.findUniqueOrThrow({ where: { id: toyid } });
+    if (!child || !toy) {
+      throw new NotFoundException('Child or Toy not found');
+    }
+    else{
+      await this.db.toy.update({
+        where: { id: toyid },
+        data: { children: { disconnect: { id: childid } } },
+      });
+    }
+  }
 }
